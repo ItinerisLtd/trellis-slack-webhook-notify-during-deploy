@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - ../../trellis-slack-webhook-notify-during-deploy

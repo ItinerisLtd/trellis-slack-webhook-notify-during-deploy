@@ -1,0 +1,18 @@
+galaxy_info:
+  author: Itineris Limited
+  description: Sends a deployment complete message to a Slack channel when Trellis deploys Bedrock
+  company: Itineris Limited
+  license: MIT
+  min_ansible_version: 2.6
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+    - bionic
+  galaxy_tags:
+    - trellis
+    - wordpress
+    - slack
+    - webhook
+    - notify
+dependencies: []
