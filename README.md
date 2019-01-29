@@ -38,7 +38,7 @@ Add this role to `requirements.yml`:
 ```yaml
 # requirements.yml
 - src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
-  version: 0.1.0 # Check for latest version!
+  version: master # Check for latest version!
 ```
 
 Run the command:
