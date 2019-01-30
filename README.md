@@ -11,6 +11,7 @@ Sends a deployment complete message to a Slack channel when [Trellis](https://gi
 
 
 - [Requirements](#requirements)
+- [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Role Variables](#role-variables)
 - [Usage](#usage)
@@ -31,6 +32,9 @@ Sends a deployment complete message to a Slack channel when [Trellis](https://gi
 - Trellis v1.0.0 or later
 - Ansible v2.6 or later
 - Valid Slack Webhook URL
+
+## Screenshots
+![Deployment Screenshot](deployment-screenshot.png)
 
 ## Installation
 
