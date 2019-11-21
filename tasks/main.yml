@@ -14,6 +14,6 @@
           - title: Commit
             value: "{{ git_clone.after }}"
           - title: User
-            value: "{{ ansible_hostname }}"
+            value: "{{ ansible_user }}"
   when: slack_webhook_token is defined and slack_webhook_token != ""
   delegate_to: localhost
