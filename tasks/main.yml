@@ -4,16 +4,7 @@
     token: "{{ slack_webhook_token }}"
     channel: slack_webhook_channel
     attachments:
-      - text: "Deployment completed successfully"
+      - text: "*{{ lookup('pipe', 'git config user.name') }}* successfully deployed {{ site }} to *<https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}>* [<{{ slack_git_repo_url }}/commit/{{ git_clone.after }}|deployed commit>]"
         color: good
-        fields:
-          - title: Project
-            value: "{{ site }}"
-          - title: Environment
-            value: "<{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}>"
-          - title: Commit
-            value: "{{ git_clone.after }}"
-          - title: User
-            value: "{{ ansible_user }}"
   when: slack_webhook_token is defined and slack_webhook_token != ""
   delegate_to: localhost

@@ -65,6 +65,7 @@ Add your Webhook token (end of the Webhook URL) and channel into `group_vars/all
 ```yaml
 slack_webhook_token: XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX
 slack_webhook_channel: '#development-alerts'
+slack_git_repo_url: "https://github.com/username/repo-name"
 ```
 
 ## Usage
