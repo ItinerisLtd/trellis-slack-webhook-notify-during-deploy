@@ -38,11 +38,12 @@ Sends a deployment complete message to a Slack channel when [Trellis](https://gi
 
 ## Installation
 
-Add this role to `requirements.yml`:
+Add this role to `requirements.yml` or `galaxy.yml` in newer versions of Trellis:
 ```yaml
 # requirements.yml
-- src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
-  version: 0.1.0 # Check for latest version!
+- name: slack-notify
+  src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
+  version: 0.3.0 # Check for latest version!
 ```
 
 Run the command:
@@ -52,11 +53,17 @@ Run the command:
 
 ## Role Variables
 
-Add this role to the [`deploy_after` hook](https://roots.io/trellis/docs/deploys/#hooks):
+Add these tasks to the `deploy_before` & `deploy_finalize_after` [hooks](https://roots.io/trellis/docs/deploys/#hooks):
 ```yaml
-# group_vars/all/deploy-hooks.yml
-# Learn more on https://roots.io/trellis/docs/deploys/#hooks
-deploy_after:
+# Deploy hooks
+# For list of hooks and explanation, see https://roots.io/trellis/docs/deploys/#hooks
+deploy_before:
+  - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_start.yml"
+
+...
+
+deploy_finalize_after:
+  - "{{ playbook_dir }}/roles/deploy/hooks/finalize-after.yml"
   - "{{ playbook_dir }}/vendor/roles/trellis-slack-webhook-notify-during-deploy/tasks/main.yml"
 ```
 
