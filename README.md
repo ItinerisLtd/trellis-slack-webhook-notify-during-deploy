@@ -1,10 +1,10 @@
-# trellis-slack-webhook-notify-during-deploy
+# Trellis Slack Webhook Depolyment Notifications
 
 [![GitHub tag](https://img.shields.io/github/tag/ItinerisLtd/trellis-slack-webhook-notify-during-deploy.svg)](https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy/tags)
 [![license](https://img.shields.io/github/license/ItinerisLtd/trellis-slack-webhook-notify-during-deploy.svg)](https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy/blob/master/LICENSE)
 
 
-Sends a deployment complete message to a Slack channel when [Trellis](https://github.com/roots/trellis) deploys [Bedrock](https://github.com/roots/bedrock).
+Sends an initial deployment started and a deployment successful message to a Slack channel when [Trellis](https://github.com/roots/trellis) deploys [Bedrock](https://github.com/roots/bedrock).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -40,7 +40,7 @@ Sends a deployment complete message to a Slack channel when [Trellis](https://gi
 
 Add this role to `requirements.yml` or `galaxy.yml` in newer versions of Trellis:
 ```yaml
-# requirements.yml
+# requirements.yml / galaxy.yml
 - name: slack-notify
   src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
   version: 0.3.0 # Check for latest version!
@@ -51,12 +51,17 @@ Run the command:
 ➜ ansible-galaxy install -r requirements.yml --force
 ```
 
+With newer versions of Trellis, run:
+```bash
+➜ ansible-galaxy install -r galaxy.yml --force
+```
+
+
 ## Role Variables
 
-Add these tasks to the `deploy_before` & `deploy_finalize_after` [hooks](https://roots.io/trellis/docs/deploys/#hooks):
+Add these roles`deploy_before` & `deploy_finalize_after` to the deploy [hooks](https://roots.io/trellis/docs/deploys/#hooks):
 ```yaml
-# Deploy hooks
-# For list of hooks and explanation, see https://roots.io/trellis/docs/deploys/#hooks
+# roles/deploy/defaults/main.yml
 deploy_before:
   - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_start.yml"
 
@@ -64,12 +69,13 @@ deploy_before:
 
 deploy_finalize_after:
   - "{{ playbook_dir }}/roles/deploy/hooks/finalize-after.yml"
-  - "{{ playbook_dir }}/vendor/roles/trellis-slack-webhook-notify-during-deploy/tasks/main.yml"
+  - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/main.yml"
 ```
 
-Add your Webhook token (end of the Webhook URL) and channel into `group_vars/all/main.yml`
+Add your Webhook token (end of the Webhook URL), channel and projects github repo into `group_vars/all/main.yml`
 
 ```yaml
+# group_vars/all/main.yml
 slack_webhook_token: XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX
 slack_webhook_channel: '#development-alerts'
 slack_git_repo_url: "https://github.com/username/repo-name"
