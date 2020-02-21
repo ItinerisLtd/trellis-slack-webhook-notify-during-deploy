@@ -69,7 +69,7 @@ deploy_before:
 
 deploy_finalize_after:
   - "{{ playbook_dir }}/roles/deploy/hooks/finalize-after.yml"
-  - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/main.yml"
+  - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_success.yml"
 ```
 
 Add your Webhook token (end of the Webhook URL), channel and projects github repo into `group_vars/all/main.yml`
