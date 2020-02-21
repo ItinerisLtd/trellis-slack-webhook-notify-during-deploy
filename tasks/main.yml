@@ -10,10 +10,10 @@
           - title: Project
             value: "{{ site }}"
           - title: Environment
-            value: "{{ env }}"
+            value: "<{{ domain_current_site }}|{{ env }}>"
           - title: Commit
             value: "{{ git_clone.after }}"
           - title: User
-            value: "{{ ansible_user }}"
+            value: "{{ git config user.name }}"
   when: slack_webhook_token is defined and slack_webhook_token != ""
   delegate_to: localhost
