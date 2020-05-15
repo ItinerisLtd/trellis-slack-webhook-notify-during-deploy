@@ -4,12 +4,14 @@
       target_env_url: "https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}"
       git_username: "{{ lookup('pipe', 'git config user.name') }}"
       using_github: "{{ project_git_repo.find('github') != -1 }}"
+    ignore_errors: yes
 
   - name: Get github commit url
     set_fact:
       github_commit_url: "https://github.com/{{ project_git_repo | regex_replace('(?:^git@github.com:|https:\/\/github.com\/)(.*).git$', '\\1') }}/commit/{{ git_clone.after }}"
     when:
       - using_github
+    ignore_errors: yes
 
   - name: Send successful deployment notification to Slack
     slack:
@@ -22,3 +24,4 @@
       - slack_webhook_token is defined
       - slack_webhook_token != ""
     delegate_to: localhost
+    ignore_errors: yes

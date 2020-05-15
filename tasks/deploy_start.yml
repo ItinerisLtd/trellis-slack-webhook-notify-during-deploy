@@ -8,3 +8,4 @@
         color: warning
   when: slack_webhook_token is defined and slack_webhook_token != ""
   delegate_to: localhost
+  ignore_errors: yes
