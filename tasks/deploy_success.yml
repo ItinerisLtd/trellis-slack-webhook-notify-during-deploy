@@ -1,10 +1,24 @@
 ---
-- name: Send successful deployment notification to Slack
-  slack:
-    token: "{{ slack_webhook_token }}"
-    channel: slack_webhook_channel
-    attachments:
-      - text: "*{{ lookup('pipe', 'git config user.name') }}* successfully deployed {{ site }} to *<https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}>* [<{{ slack_git_repo_url }}/commit/{{ git_clone.after }}|deployed commit>]"
-        color: good
-  when: slack_webhook_token is defined and slack_webhook_token != ""
-  delegate_to: localhost
+  - name: Get slack & git user info
+    set_fact:
+      target_env_url: "https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}"
+      git_username: "{{ lookup('pipe', 'git config user.name') }}"
+      using_github: "{{ project_git_repo.find('github') != -1 }}"
+
+  - name: Get github commit url
+    set_fact:
+      github_commit_url: "https://github.com/{{ project_git_repo | regex_replace('(?:^git@github.com:|https:\/\/github.com\/)(.*).git$', '\\1') }}/commit/{{ git_clone.after }}"
+    when:
+      - using_github
+
+  - name: Send successful deployment notification to Slack
+    slack:
+      token: "{{ slack_webhook_token }}"
+      channel: slack_webhook_channel
+      attachments:
+        - text: "*{{ git_username }}* successfully deployed {{ site }} to *<{{ target_env_url }}>* {% if using_github %} [<{{ github_commit_url }}|deployed commit>] {% else %} [{{ git_clone.after }}] {% endif %}"
+          color: good
+    when:
+      - slack_webhook_token is defined
+      - slack_webhook_token != ""
+    delegate_to: localhost
