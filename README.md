@@ -59,7 +59,7 @@ With newer versions of Trellis, run:
 
 ## Role Variables
 
-Add these roles`deploy_before` & `deploy_finalize_after` to the deploy [hooks](https://roots.io/trellis/docs/deploys/#hooks):
+Add these roles`deploy_before` & `deploy_after` to the deploy [hooks](https://roots.io/trellis/docs/deploys/#hooks):
 ```yaml
 # roles/deploy/defaults/main.yml
 deploy_before:
@@ -67,8 +67,7 @@ deploy_before:
 
 ...
 
-deploy_finalize_after:
-  - "{{ playbook_dir }}/roles/deploy/hooks/finalize-after.yml"
+deploy_after:
   - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_success.yml"
 ```
 
