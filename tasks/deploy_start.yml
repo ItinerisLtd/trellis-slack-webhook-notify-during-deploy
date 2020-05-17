@@ -1,11 +1,14 @@
 ---
 - name: Send initial deployment notification to Slack
   slack:
-    token: "{{ slack_webhook_token }}"
-    channel: slack_webhook_channel
+    token: "{{ item.token }}"
+    channel: "{{ item.channel }}"
     attachments:
       - text: "*{{ lookup('pipe', 'git config user.name') }}* has started deploying {{ site }} to *<https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}>*"
         color: warning
-  when: slack_webhook_token is defined and slack_webhook_token != ""
+  loop: "{{ slack_notifications }}"
+  when:
+    - slack_notifications is defined
+    - slack_notifications | length > 0
   delegate_to: localhost
   ignore_errors: yes
