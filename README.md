@@ -73,7 +73,7 @@ deploy_after:
   - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_success.yml"
 ```
 
-Add your slack webhook token (end of the webhook URL) and channel into `group_vars/all/main.yml`
+Add your Slack webhook token (end of the webhook URL) and channel into `group_vars/all/main.yml`
 
 ```yaml
 # group_vars/all/main.yml
