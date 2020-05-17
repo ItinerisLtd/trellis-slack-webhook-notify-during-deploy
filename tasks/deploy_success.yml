@@ -1,27 +1,28 @@
 ---
-  - name: Get slack & git user info
-    set_fact:
-      target_env_url: "https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}"
-      git_username: "{{ lookup('pipe', 'git config user.name') }}"
-      using_github: "{{ project_git_repo.find('github') != -1 }}"
-    ignore_errors: yes
+- name: Get slack & git user info
+  set_fact:
+    target_env_url: "https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}"
+    git_username: "{{ lookup('pipe', 'git config user.name') }}"
+    using_github: "{{ project_git_repo.find('github') != -1 }}"
+  ignore_errors: yes
 
-  - name: Get github commit url
-    set_fact:
-      github_commit_url: "https://github.com/{{ project_git_repo | regex_replace('(?:^git@github.com:|https:\/\/github.com\/)(.*).git$', '\\1') }}/commit/{{ git_clone.after }}"
-    when:
-      - using_github
-    ignore_errors: yes
+- name: Get github commit url
+  set_fact:
+    github_commit_url: "https://github.com/{{ project_git_repo | regex_replace('(?:^git@github.com:|https:\/\/github.com\/)(.*).git$', '\\1') }}/commit/{{ git_clone.after }}"
+  when:
+    - using_github
+  ignore_errors: yes
 
-  - name: Send successful deployment notification to Slack
-    slack:
-      token: "{{ slack_webhook_token }}"
-      channel: slack_webhook_channel
-      attachments:
-        - text: "*{{ git_username }}* successfully deployed {{ site }} to *<{{ target_env_url }}>* {% if using_github %} [<{{ github_commit_url }}|deployed commit>] {% else %} [{{ git_clone.after }}] {% endif %}"
-          color: good
-    when:
-      - slack_webhook_token is defined
-      - slack_webhook_token != ""
-    delegate_to: localhost
-    ignore_errors: yes
+- name: Send successful deployment notification to Slack
+  slack:
+    token: "{{ item.token }}"
+    channel: "{{ item.channel }}"
+    attachments:
+      - text: "*{{ git_username }}* successfully deployed {{ site }} to *<{{ target_env_url }}>* {% if using_github %} [<{{ github_commit_url }}|deployed commit>] {% else %} [{{ git_clone.after }}] {% endif %}"
+        color: good
+  loop: "{{ slack_notifications }}"
+  when:
+    - slack_notifications is defined
+    - slack_notifications | length > 0
+  delegate_to: localhost
+  ignore_errors: yes
