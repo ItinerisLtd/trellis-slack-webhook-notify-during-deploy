@@ -73,17 +73,17 @@ deploy_after:
   - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_success.yml"
 ```
 
-Add your Slack webhook token (end of the webhook URL) and channel into `group_vars/all/main.yml`
+Add your Slack webhook token(s) (end of the webhook URL) and channel into `group_vars/{environment}/vault.yml`
 
 ```yaml
-# group_vars/all/main.yml
-slack_notifications:
-  - name: Organisation1
-    token: XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX
-    channel: "#site-status"
-  - name: Organisation2
-    token: XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX
-    channel: "#deployments"
+# group_vars/{environment}/vault.yml
+vault_wordpress_sites:
+  example.com.au:
+    slack_deploy_token:
+      - XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX
+      - XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX
+    env:
+      ...
 ```
 
 ## Usage
@@ -98,6 +98,8 @@ slack_notifications:
 2. Create an App (e.g. "Deployment alerts") and enable "Incoming Webhooks"
 3. Setup a Webhook for your desired Workspace
 4. Copy the Webhook URL for use in [Installation](#installation)
+
+Note: Each Webhook can only post to one channel since Slack changed their API. You will need to set up a webhook per channel you wish to notify.
 
 ## See Also
 
