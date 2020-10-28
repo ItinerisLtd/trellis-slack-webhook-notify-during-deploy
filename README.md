@@ -38,16 +38,17 @@ Sends a deployment complete message to a Slack channel when [Trellis](https://gi
 
 ## Installation
 
-Add this role to `requirements.yml`:
+Add this role to `galaxy.yml`:
 ```yaml
-# requirements.yml
-- src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
+# galaxy.yml
+- name: slack
+  src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
   version: 0.1.0 # Check for latest version!
 ```
 
 Run the command:
 ```bash
-➜ ansible-galaxy install -r requirements.yml --force
+➜ ansible-galaxy install -r galaxy.yml --force
 ```
 
 ## Role Variables
