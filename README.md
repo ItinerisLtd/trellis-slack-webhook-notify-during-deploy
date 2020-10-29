@@ -41,8 +41,7 @@ Sends a deployment complete message to a Slack channel when [Trellis](https://gi
 Add this role to `galaxy.yml`:
 ```yaml
 # galaxy.yml
-- name: slack
-  src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
+- src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
   version: 0.1.0 # Check for latest version!
 ```
 
