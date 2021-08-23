@@ -41,8 +41,8 @@ Add this role to `galaxy.yml`:
 
 ```yaml
 # galaxy.yml
-  src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
-  version: 0.5.0 # Check for latest version!
+- src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
+  version: 0.1.0 # Check for latest version!
 ```
 
 Run the command:
