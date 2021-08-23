@@ -37,11 +37,10 @@ Sends an initial deployment started and a deployment successful message to a Sla
 
 ## Installation
 
-Add this role to `requirements.yml` or `galaxy.yml` in newer versions of Trellis:
+Add this role to `galaxy.yml`:
 
 ```yaml
-# requirements.yml / galaxy.yml
-- name: slack-notify
+# galaxy.yml
   src: https://github.com/ItinerisLtd/trellis-slack-webhook-notify-during-deploy
   version: 0.3.0 # Check for latest version!
 ```
@@ -49,7 +48,7 @@ Add this role to `requirements.yml` or `galaxy.yml` in newer versions of Trellis
 Run the command:
 
 ```bash
-➜ ansible-galaxy install -r requirements.yml --force
+➜ ansible-galaxy install -r galaxy.yml --force
 ```
 
 With newer versions of Trellis, run:
