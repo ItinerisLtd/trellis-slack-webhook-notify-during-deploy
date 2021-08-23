@@ -51,12 +51,6 @@ Run the command:
 ➜ ansible-galaxy install -r galaxy.yml --force
 ```
 
-With newer versions of Trellis, run:
-
-```bash
-➜ ansible-galaxy install -r galaxy.yml --force
-```
-
 ## Role Variables
 
 Add the start & success tasks to the `deploy_before` & `deploy_after` deploy [hooks](https://roots.io/trellis/docs/deploys/#hooks):
@@ -64,12 +58,12 @@ Add the start & success tasks to the `deploy_before` & `deploy_after` deploy [ho
 ```yaml
 # roles/deploy/defaults/main.yml
 deploy_before:
-  - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_start.yml"
+  - "{{ playbook_dir }}/vendor/roles/trellis-slack-webhook-notify-during-deploy/tasks/deploy_start.yml"
 
 ...
 
 deploy_after:
-  - "{{ playbook_dir }}/vendor/roles/slack-notify/tasks/deploy_success.yml"
+  - "{{ playbook_dir }}/vendor/roles/trellis-slack-webhook-notify-during-deploy/tasks/deploy_success.yml"
 ```
 
 Add your Slack webhook token(s) (end of the webhook URL) and channel into `group_vars/{environment}/vault.yml`
