@@ -1,14 +1,15 @@
 ---
 - name: Send initial deployment notification to Slack
   slack:
-    token: "{{ item.token }}"
-    channel: "{{ item.channel }}"
+    token: "{{ slack_deploy_token }}"
     attachments:
       - text: "*{{ lookup('pipe', 'git config user.name') }}* has started deploying {{ site }} to *<https://{{ project.site_hosts | map(attribute='canonical') | first }}|{{ env }}>*"
         color: warning
-  loop: "{{ slack_notifications }}"
+  with_items: "{{ vault_wordpress_sites[site].slack_deploy_token }}"
+  loop_control:
+    loop_var: slack_deploy_token
   when:
-    - slack_notifications is defined
-    - slack_notifications | length > 0
+    - vault_wordpress_sites[site].slack_deploy_token is defined
+    - vault_wordpress_sites[site].slack_deploy_token | length > 0
   delegate_to: localhost
   ignore_errors: yes
