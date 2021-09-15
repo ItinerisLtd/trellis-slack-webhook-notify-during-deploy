@@ -45,10 +45,10 @@ Add this role to `galaxy.yml`:
   version: 0.1.0 # Check for latest version!
 ```
 
-Run the command:
+Run the following command from `./trellis` dir:
 
 ```bash
-➜ ansible-galaxy install -r galaxy.yml --force
+ansible-galaxy install -r galaxy.yml --force
 ```
 
 ## Role Variables
@@ -103,7 +103,7 @@ Note: Each Webhook can only post to one channel since Slack changed their API. Y
 ### Syntax Check
 
 ```bash
-➜ ansible-playbook -i 'localhost,' --syntax-check tests/test.yml
+ansible-playbook -i 'localhost,' --syntax-check tests/test.yml
 ```
 
 ## Author Information
